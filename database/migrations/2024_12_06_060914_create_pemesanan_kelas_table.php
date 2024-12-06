@@ -21,7 +21,6 @@ return new class extends Migration
             $table->enum('Jenis_pembayaran', ['Kartu Kredit', 'Kartu Debit', 'E Wallet']); // Type of payment
             $table->date('Tanggal_mulai'); // Start date
             $table->date('Tanggal_selesai'); // End date
-            $table->timestamps(); // Timestamps for created_at and updated_at
         });
     }
 

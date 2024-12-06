@@ -18,7 +18,6 @@ return new class extends Migration
             $table->date('tanggal_mulai'); // Start date of membership
             $table->date('tanggal_berakhir'); // End date of membership
             $table->boolean('status'); // Status of membership (active or not)
-            $table->timestamps(); // Timestamps for created_at and updated_at
         });
     }
 

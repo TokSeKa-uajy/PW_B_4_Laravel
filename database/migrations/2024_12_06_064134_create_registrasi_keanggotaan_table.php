@@ -18,7 +18,6 @@ return new class extends Migration
             $table->decimal('Total_pembayaran', 10, 2); // Total pembayaran
             $table->enum('Status_pembayaran', ['paid', 'pending', 'failed']); // Status pembayaran
             $table->enum('Jenis_pembayaran', ['Kartu Kredit', 'Kartu Debit', 'E Wallet']); // Jenis pembayaran
-            $table->timestamps();
         });
     }
 

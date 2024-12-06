@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->enum('Durasi', ['1_month', '6_months', '1_year']); // Durasi paket
             $table->decimal('Harga', 10, 2); // Harga paket
-            $table->timestamps();
         });
     }
 

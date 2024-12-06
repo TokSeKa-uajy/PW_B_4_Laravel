@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('ID_pengguna');// Foreign key to Pengguna
             $table->unsignedBigInteger('ID_Pemesanan_Kelas'); // Foreign key to PemesananKelas
             $table->date('Tanggal_latihan'); // Date of training
-            $table->timestamps();
         });
     }
 

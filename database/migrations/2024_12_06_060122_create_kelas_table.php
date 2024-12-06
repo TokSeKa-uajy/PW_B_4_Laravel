@@ -22,7 +22,6 @@ return new class extends Migration
             $table->time('Durasi'); // Duration of the class
             $table->decimal('Harga', 10, 2); // Price of the class
             $table->integer('Kapasitas_kelas'); // Capacity of the class
-            $table->timestamps();
         });
     }
 

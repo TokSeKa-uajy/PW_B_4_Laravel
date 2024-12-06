@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('alamat', 255)->nullable();
             $table->string('Foto_profil', 255);  // Assumes storing image URLs or paths
             $table->boolean('status');
-            $table->timestamps();
         });
     }
 

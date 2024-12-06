@@ -18,7 +18,6 @@ return new class extends Migration
             $table->integer('Rating')->nullable(); // Rating as DOUBLE nullable
             $table->string('Komentar', 255)->nullable(); // Komentar as VARCHAR(255) nullable
             $table->date('Tanggal_umpan_balik'); // Tanggal umpan balik
-            $table->timestamps();
         });
     }
 

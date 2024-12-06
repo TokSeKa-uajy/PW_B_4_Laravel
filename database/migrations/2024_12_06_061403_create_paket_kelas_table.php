@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id(); // Menggunakan $table->id(); untuk BIGINT auto-increment
             $table->enum('Durasi', ['1_week', '1_month', '6_months']); // Durasi paket
             $table->decimal('Harga', 10, 2); // Harga paket
-            $table->timestamps(); // Timestamps for created_at and updated_at
         });
     }
 
