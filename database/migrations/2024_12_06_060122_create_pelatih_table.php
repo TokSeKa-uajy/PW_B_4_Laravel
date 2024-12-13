@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_depan', 255); // Nama depan pelatih
             $table->string('nama_belakang', 255); // Nama belakang pelatih
             $table->string('foto_profil')->nullable(); // Kolom untuk URL atau path file foto profil, nullable
-            $table->boolean('jenis_kelamin'); // Jenis kelamin sebagai boolean, 0 atau 1
+            $table->string('jenis_kelamin'); // Jenis kelamin sebagai boolean, 0 atau 1
         });
     }
 

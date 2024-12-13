@@ -35,10 +35,8 @@ class AuthController extends Controller
         ], 201);
     }
 
-    // Login method
     public function login(Request $request)
     {
-        // Validasi input
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string|min:8',
@@ -50,7 +48,6 @@ class AuthController extends Controller
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
-        // Buat token dengan role sebagai scope
         $token = $user->createToken('authToken', [$user->role])->plainTextToken;
 
         // Berikan respons berhasil login
@@ -65,7 +62,6 @@ class AuthController extends Controller
         ], 200);
     }
 
-    // Logout method
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
@@ -75,7 +71,6 @@ class AuthController extends Controller
         ], 200);
     }
 
-    // Role-based middleware (Optional for specific access control)
     public function roleCheck(Request $request)
     {
         $user = $request->user();

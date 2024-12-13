@@ -23,16 +23,6 @@ class KelasController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // Untuk API biasanya tidak perlu method create
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -80,17 +70,6 @@ class KelasController extends Controller
             'message' => 'Data kelas berhasil diambil',
             'data' => $kelas,
         ], 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        // Untuk API biasanya tidak perlu method edit
     }
 
     /**
