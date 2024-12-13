@@ -10,7 +10,7 @@ class Pelatih extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'pelatih';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_pelatih';
 
     protected $fillable = [
         'nama_depan',

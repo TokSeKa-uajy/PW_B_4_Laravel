@@ -10,7 +10,7 @@ class Pemesanan_kelas extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'pemesanan_kelas';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_pemesanan_kelas';
 
     protected $fillable = [
         'id_user',

@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pelatih', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id_pelatih');
             $table->string('nama_depan', 255); // Nama depan pelatih
             $table->string('nama_belakang', 255); // Nama belakang pelatih
-            $table->string('Foto_profil')->nullable(); // Kolom untuk URL atau path file foto profil, nullable
+            $table->string('foto_profil')->nullable(); // Kolom untuk URL atau path file foto profil, nullable
             $table->boolean('jenis_kelamin'); // Jenis kelamin sebagai boolean, 0 atau 1
         });
     }

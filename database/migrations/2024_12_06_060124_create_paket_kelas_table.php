@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('paket_kelas', function (Blueprint $table) {
-            $table->id(); // Menggunakan $table->id(); untuk BIGINT auto-increment
-            $table->enum('Durasi', ['1_week', '1_month', '6_months']); // Durasi paket
-            $table->decimal('Harga', 10, 2); // Harga paket
+            $table->bigIncrements('id_paket_kelas');
+            $table->enum('durasi', ['1_minggu', '1_bulan', '6_bulan']);
+            $table->decimal('harga', 10, 2);
         });
     }
 

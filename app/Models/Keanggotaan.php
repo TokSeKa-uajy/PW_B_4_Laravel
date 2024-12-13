@@ -24,5 +24,10 @@ class Keanggotaan extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+
+    public function paket_keanggotaan()
+    {
+        return $this->belongsTo(Paket_keanggotaan::class, 'id_paket_keanggotaan');
+    }
     
 }

@@ -11,18 +11,24 @@ class Registrasi_keanggotaan extends Model
     
     public $timestamps = false;
     protected $table = 'registrasi_keanggotaan';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_registrasi_keanggotaan';
 
     protected $fillable = [
-        'id_keanggotaan',
+        'id_user',
+        'id_paket_keanggotaan',
         'tanggal_pembayaran',
         'total_pembayaran',
         'status_pembayaran',
         'jenis_pembayaran',
     ];
 
-    public function keanggotaan()
+    public function user()
     {
-        return $this->belongsTo(Keanggotaan::class, 'id_keanggotaan');
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function paket_keanggotaan()
+    {
+        return $this->belongsTo(Paket_keanggotaan::class, 'id_paket_keanggotaan');
     }
 }

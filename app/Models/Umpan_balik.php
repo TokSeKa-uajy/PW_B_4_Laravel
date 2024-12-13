@@ -11,7 +11,7 @@ class Umpan_balik extends Model
     
     public $timestamps = false;
     protected $table = 'umpan_balik';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_umpan_balik';
 
     protected $fillable = [
         'id_user',

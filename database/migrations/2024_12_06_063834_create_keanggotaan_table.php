@@ -4,20 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::create('keanggotaan', function (Blueprint $table) {
-            // Note: No primary key defined
-            $table->unsignedBigInteger('ID_pengguna');
-            $table->unsignedBigInteger('ID_paket_keanggotaan');
-            $table->date('tanggal_mulai'); // Start date of membership
-            $table->date('tanggal_berakhir'); // End date of membership
-            $table->boolean('status'); // Status of membership (active or not)
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_paket_keanggotaan');
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_berakhir');
+            $table->boolean('status');
+
+            $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
+            $table->foreign('id_paket_keanggotaan')->references('id_paket_keanggotaan')->on('paket_keanggotaan')->onDelete('cascade');
         });
     }
 

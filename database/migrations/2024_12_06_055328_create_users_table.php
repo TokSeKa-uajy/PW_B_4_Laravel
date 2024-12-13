@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('Email', 255)->unique();
-            $table->string('Password', 100);
+            $table->bigIncrements('id_user');
+            $table->string('email', 255)->unique();
+            $table->string('password', 100);
             $table->string('nomor_telepon', 20)->unique();
             $table->string('nama_depan', 255);
             $table->string('nama_belakang', 255);
-            $table->boolean('jenis_kelamin');
-            $table->string('alamat', 255)->nullable();
-            $table->string('Foto_profil', 255);  // Assumes storing image URLs or paths
-            $table->boolean('status');
+            $table->string('role')->default('user');
+            $table->string('jenis_kelamin');
+            $table->string('foto_profil', 255)->nullable();
+            $table->boolean('status')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

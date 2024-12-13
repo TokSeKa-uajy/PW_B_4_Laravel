@@ -11,7 +11,7 @@ class Paket_keanggotaan extends Model
     
     public $timestamps = false;
     protected $table = 'paket_keanggotaan';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_paket_keanggotaan';
 
     protected $fillable = [
         'durasi',

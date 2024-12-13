@@ -10,7 +10,7 @@ class Paket_kelas extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'paket_kelas';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_paket_kelas';
 
     protected $fillable = [
         'id_kelas',

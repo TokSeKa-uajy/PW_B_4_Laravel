@@ -8,13 +8,13 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     */ 
+     */
     public function up(): void
     {
-        Schema::create('kategori_kelas', function (Blueprint $table) {
-            $table->id();
-            $table->string('Nama_kategori', 255); // Nama kategori
-            $table->text('Deskripsi_kategori')->nullable(); // Deskripsi kategori, nullable
+        Schema::create('paket_keanggotaan', function (Blueprint $table) {
+            $table->bigIncrements('id_paket_keanggotaan');
+            $table->enum('durasi', ['1_bulan', '6_bulan', '1_tahun']);
+            $table->decimal('harga', 10, 2);
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kategori_kelas');
+        Schema::dropIfExists('paket_keanggotaan');
     }
 };

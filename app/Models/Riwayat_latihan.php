@@ -11,16 +11,21 @@ class Riwayat_latihan extends Model
     
     public $timestamps = false;
     protected $table = 'riwayat_latihan';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_riwayat_latihan';
 
     protected $fillable = [
         'id_user',
-        'id_Pemesanan_Kelas',
+        'id_pemesanan_Kelas',
         'tanggal_latihan',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function pemesanan_kelas()
+    {
+        return $this->belongsTo(Pemesanan_kelas::class, 'id_pemesanan_Kelas');
     }
 }

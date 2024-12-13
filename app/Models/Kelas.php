@@ -10,17 +10,16 @@ class Kelas extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'kelas';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_kelas';
 
     protected $fillable = [
         'id_pelatih',
-        'id_kategori',
+        'id_kategori_kelas',
         'nama_kelas',
         'deskripsi',
         'hari',
         'jam_mulai',
         'durasi',
-        'harga',
         'kapasitas_kelas',
     ];
 
@@ -31,6 +30,6 @@ class Kelas extends Model
 
     public function kategori()
     {
-        return $this->belongsTo(Kategori_kelas::class, 'id_kategori');
+        return $this->belongsTo(Kategori_kelas::class, 'id_kategori_kelas');
     }
 }
