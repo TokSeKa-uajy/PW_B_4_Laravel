@@ -32,11 +32,17 @@ class PaketKelasController extends Controller
     {
         try {
             $validated = $request->validate([
+                'id_kelas' => 'required|exists:kelas,id_kelas',
                 'durasi' => 'required|in:1_minggu,1_bulan,6_bulan',
                 'harga' => 'required|numeric|min:0',
             ]);
 
-            $paketKelas = Paket_kelas::create($validated);
+            // Membuat paket kelas dengan menambahkan id_kelas
+            $paketKelas = Paket_kelas::create([
+                'id_kelas' => $validated['id_kelas'],
+                'durasi' => $validated['durasi'],
+                'harga' => $validated['harga'],
+            ]);
 
             return response()->json([
                 'message' => 'Paket kelas berhasil dibuat.',
@@ -49,6 +55,7 @@ class PaketKelasController extends Controller
             ], 500);
         }
     }
+
 
     // Show
     public function show($id)
@@ -89,11 +96,23 @@ class PaketKelasController extends Controller
             }
 
             $validated = $request->validate([
+                'id_kelas' => 'sometimes|exists:kelas,id_kelas',
                 'durasi' => 'sometimes|in:1_minggu,1_bulan,6_bulan',
                 'harga' => 'sometimes|numeric|min:0',
             ]);
 
-            $paketKelas->update($validated);
+            if (isset($validated['id_kelas'])) {
+                $paketKelas->id_kelas = $validated['id_kelas'];
+            }
+
+            if (isset($validated['durasi'])) {
+                $paketKelas->durasi = $validated['durasi'];
+            }
+            if (isset($validated['harga'])) {
+                $paketKelas->harga = $validated['harga'];
+            }
+
+            $paketKelas->save();
 
             return response()->json([
                 'message' => 'Paket kelas berhasil diperbarui.',
@@ -106,6 +125,7 @@ class PaketKelasController extends Controller
             ], 500);
         }
     }
+
 
     // Destroy
     public function destroy($id)

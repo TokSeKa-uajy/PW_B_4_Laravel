@@ -14,7 +14,6 @@ class Pemesanan_kelas extends Model
 
     protected $fillable = [
         'id_user',
-        'id_kelas',
         'id_paket_kelas',
         'tanggal_pemesanan',
         'jenis_pembayaran',
@@ -25,11 +24,6 @@ class Pemesanan_kelas extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
-    }
-
-    public function kelas()
-    {
-        return $this->belongsTo(Kelas::class, 'id_kelas');
     }
 
     public function paket_kelas()

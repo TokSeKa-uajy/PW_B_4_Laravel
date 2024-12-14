@@ -13,7 +13,6 @@ return new class extends Migration {
         Schema::create('pemesanan_kelas', function (Blueprint $table) {
             $table->bigIncrements('id_pemesanan_kelas');
             $table->unsignedBigInteger('id_user');
-            $table->unsignedBigInteger('id_kelas');
             $table->unsignedBigInteger('id_paket_kelas');
             $table->date('tanggal_pemesanan');
             $table->enum('jenis_pembayaran', ['Kartu Kredit', 'Kartu Debit', 'E Wallet']);
@@ -21,7 +20,6 @@ return new class extends Migration {
             $table->date('tanggal_selesai');
 
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
-            $table->foreign('id_kelas')->references('id_kelas')->on('kelas')->onDelete('cascade');
             $table->foreign('id_paket_kelas')->references('id_paket_kelas')->on('paket_kelas')->onDelete('cascade');
         });
     }
