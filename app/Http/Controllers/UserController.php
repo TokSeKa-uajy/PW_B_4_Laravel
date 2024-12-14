@@ -57,7 +57,7 @@ class UserController extends Controller
     {
         // Validasi input file
         $validator = Validator::make($request->all(), [
-            'profile_picture' => 'required|image|mimes:jpeg,jpg,png|max:2048', // Maksimum 2MB
+            'foto_profil' => 'required|image|mimes:jpeg,jpg,png|max:2048', // Maksimum 2MB
         ]);
 
         if ($validator->fails()) {
@@ -67,14 +67,14 @@ class UserController extends Controller
             ], 422);
         }
 
-        if ($request->hasFile('profile_picture')) {
+        if ($request->hasFile('foto_profil')) {
             // Ambil data user yang sedang login
             $user = $request->user();
 
             // Proses penyimpanan file
-            $file = $request->file('profile_picture');
+            $file = $request->file('foto_profil');
             $fileName = $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('profile_pictures', $fileName, 'public');
+            $path = $file->storeAs('foto_profils', $fileName, 'public');
 
             // Update path foto profil ke database
             $user->foto_profil = $path; // Simpan path relatif
