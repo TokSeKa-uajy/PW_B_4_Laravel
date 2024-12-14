@@ -30,4 +30,9 @@ class Registrasi_keanggotaan extends Model
     {
         return $this->belongsTo(Paket_keanggotaan::class, 'id_paket_keanggotaan');
     }
+
+    public function keanggotaan()
+    {
+        return $this->hasOne(Keanggotaan::class, 'id_registrasi_keanggotaan');
+    }
 }

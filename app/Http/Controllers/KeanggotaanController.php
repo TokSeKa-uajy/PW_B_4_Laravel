@@ -55,7 +55,6 @@ class KeanggotaanController extends Controller
                 'id_paket_keanggotaan' => $validated['id_paket_keanggotaan'],
                 'tanggal_mulai' => $validated['tanggal_mulai'],
                 'tanggal_berakhir' => $tanggalBerakhir,
-                'status' => true,
             ]
         );
 

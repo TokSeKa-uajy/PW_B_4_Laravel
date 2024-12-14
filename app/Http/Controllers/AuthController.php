@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Keanggotaan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -47,6 +48,8 @@ class AuthController extends Controller
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
+        $this->checkMembershipExpiry($user->id_user);
+
         $token = $user->createToken('authToken', [$user->role])->plainTextToken;
 
         return response()->json([
@@ -78,4 +81,15 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'You are a regular user'], 200);
     }
+
+    // Menambahkan metode checkMembershipExpiry di AuthController
+    public function checkMembershipExpiry($userId)
+    {
+        $keanggotaan = Keanggotaan::where('id_user', $userId)->first();
+
+        if ($keanggotaan && $keanggotaan->tanggal_berakhir < now()) {
+            $keanggotaan->delete();
+        }
+    }
+
 }

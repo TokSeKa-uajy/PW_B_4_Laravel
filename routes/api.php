@@ -61,6 +61,21 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(func
     Route::get('pemesanan-kelas/{id}', [App\Http\Controllers\PemesananKelasController::class, 'show']);
     Route::put('pemesanan-kelas/{id}/status', [App\Http\Controllers\PemesananKelasController::class, 'updateStatusPembayaran']);
     Route::delete('pemesanan-kelas/{id}', [App\Http\Controllers\PemesananKelasController::class, 'hapusPesanan']);
+
+    //registrasi keanggotaan
+    Route::post('/registrasi-keanggotaan', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'store']);
+    Route::get('/registrasi-keanggotaan', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'showByUser']);
+
+    //keanggotaan
+    Route::post('/keanggotaan', [App\Http\Controllers\KeanggotaanController::class, 'registerMembership']);
+    Route::get('/keanggotaan', [App\Http\Controllers\KeanggotaanController::class, 'showByUser']);
+
+    //umpan balik
+    Route::get('/umpan-balik', [App\Http\Controllers\UmpanBalikController::class, 'index']);
+    Route::post('/umpan-balik', [App\Http\Controllers\UmpanBalikController::class, 'store']);
+    Route::get('/umpan-balik/{id}', [App\Http\Controllers\UmpanBalikController::class, 'show']);
+    Route::put('/umpan-balik/{id}', [App\Http\Controllers\UmpanBalikController::class, 'update']);
+    Route::delete('/umpan-balik/{id}', [App\Http\Controllers\UmpanBalikController::class, 'destroy']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {

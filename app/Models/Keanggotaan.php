@@ -17,7 +17,6 @@ class Keanggotaan extends Model
         'id_paket_keanggotaan',
         'tanggal_mulai',
         'tanggal_berakhir',
-        'status',
     ];
 
     public function user()

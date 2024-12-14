@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_paket_keanggotaan');
             $table->date('tanggal_mulai');
             $table->date('tanggal_berakhir');
-            $table->boolean('status');
 
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
             $table->foreign('id_paket_keanggotaan')->references('id_paket_keanggotaan')->on('paket_keanggotaan')->onDelete('cascade');

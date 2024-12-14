@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Registrasi_keanggotaan;
 use App\Models\Paket_keanggotaan;
+use App\Http\Controllers\KeanggotaanController;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class RegistrasiKeanggotaanController extends Controller
@@ -15,21 +17,55 @@ class RegistrasiKeanggotaanController extends Controller
         $validated = $request->validate([
             'id_user' => 'required|exists:users,id_user',
             'id_paket_keanggotaan' => 'required|exists:paket_keanggotaan,id_paket_keanggotaan',
-            'total_pembayaran' => 'required|numeric|min:0',
             'jenis_pembayaran' => 'required|in:Kartu Kredit,Kartu Debit,E Wallet',
         ]);
 
+        $paket = DB::table('paket_keanggotaan')
+            ->select('harga')
+            ->where('id_paket_keanggotaan', $validated['id_paket_keanggotaan'])
+            ->first();
+
+        if (!$paket) {
+            return response()->json([
+                'message' => 'Paket keanggotaan tidak ditemukan.',
+            ], 404);
+        }
+
+        // Simpan pembayaran
         $registrasi = Registrasi_keanggotaan::create([
             'id_user' => $validated['id_user'],
             'id_paket_keanggotaan' => $validated['id_paket_keanggotaan'],
             'tanggal_pembayaran' => now(),
-            'total_pembayaran' => $validated['total_pembayaran'],
+            'total_pembayaran' => $paket->harga,
             'jenis_pembayaran' => $validated['jenis_pembayaran'],
         ]);
 
+        // Lanjutkan proses keanggotaan
+        $keanggotaanController = new KeanggotaanController();
+        $keanggotaanRequest = new Request([
+            'id_paket_keanggotaan' => $validated['id_paket_keanggotaan'],
+            'tanggal_mulai' => now(),
+        ]);
+        $keanggotaanRequest->setUserResolver(function () use ($request) {
+            return $request->user();
+        });
+
+        $keanggotaanResponse = $keanggotaanController->registerMembership($keanggotaanRequest);
+
+        if ($keanggotaanResponse->getStatusCode() !== 201) {
+            return response()->json([
+                'message' => 'Pembayaran berhasil, tetapi pendaftaran keanggotaan gagal.',
+                'data' => $registrasi,
+                'error' => json_decode($keanggotaanResponse->getContent(), true),
+            ], 500);
+        }
+
         return response()->json([
-            'message' => 'Transaksi pembayaran berhasil disimpan.',
-            'data' => $registrasi,
+            'message' => 'Pembayaran berhasil dan keanggotaan didaftarkan.',
+            'data' => [
+                'registrasi' => $registrasi,
+                'keanggotaan' => json_decode($keanggotaanResponse->getContent(), true)['data'],
+            ],
         ], 201);
     }
 
