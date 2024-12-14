@@ -16,7 +16,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_kelas');
             $table->unsignedBigInteger('id_paket_kelas');
             $table->date('tanggal_pemesanan');
-            $table->enum('status_pembayaran', ['Lunas', 'Tertunda', 'Gagal']);
             $table->enum('jenis_pembayaran', ['Kartu Kredit', 'Kartu Debit', 'E Wallet']);
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');

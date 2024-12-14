@@ -15,7 +15,7 @@ class Umpan_balik extends Model
 
     protected $fillable = [
         'id_user',
-        'id_kelas',
+        'id_pemesanan_kelas',
         'rating',
         'komentar',
         'tanggal_umpan_balik',
@@ -26,8 +26,8 @@ class Umpan_balik extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
-    public function kelas()
+    public function pemesanan_kelas()
     {
-        return $this->belongsTo(Kelas::class, 'id_kelas');
+        return $this->belongsTo(Pemesanan_kelas::class, 'id_pemesanan_kelas');
     }
 }

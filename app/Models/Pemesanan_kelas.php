@@ -17,7 +17,6 @@ class Pemesanan_kelas extends Model
         'id_kelas',
         'id_paket_kelas',
         'tanggal_pemesanan',
-        'status_pembayaran',
         'jenis_pembayaran',
         'tanggal_mulai',
         'tanggal_selesai',
