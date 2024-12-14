@@ -18,7 +18,6 @@ class Registrasi_keanggotaan extends Model
         'id_paket_keanggotaan',
         'tanggal_pembayaran',
         'total_pembayaran',
-        'status_pembayaran',
         'jenis_pembayaran',
     ];
 

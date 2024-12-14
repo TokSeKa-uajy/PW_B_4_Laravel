@@ -16,7 +16,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_paket_keanggotaan');
             $table->date('tanggal_pembayaran');
             $table->decimal('total_pembayaran', 10, 2);
-            $table->enum('status_pembayaran', ['paid', 'pending', 'failed']);
             $table->enum('jenis_pembayaran', ['Kartu Kredit', 'Kartu Debit', 'E Wallet']);
 
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');

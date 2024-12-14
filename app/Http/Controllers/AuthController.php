@@ -22,7 +22,6 @@ class AuthController extends Controller
             'role' => 'required|in:user,admin',
             'jenis_kelamin' => 'required|in:pria,wanita',
             'foto_profil' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'status' => 'nullable|string',
         ]);
 
         $validatedData['password'] = bcrypt($request->password);
@@ -50,7 +49,6 @@ class AuthController extends Controller
 
         $token = $user->createToken('authToken', [$user->role])->plainTextToken;
 
-        // Berikan respons berhasil login
         return response()->json([
             'message' => 'Login successful',
             'user' => [

@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('role')->default('user');
             $table->string('jenis_kelamin');
             $table->string('foto_profil', 255)->nullable();
-            $table->boolean('status')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
