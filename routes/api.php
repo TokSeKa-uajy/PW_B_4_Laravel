@@ -53,6 +53,14 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
 
 Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(function () {
     Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'profile']);
+
+    //pemesanan kelas
+    Route::get('pemesanan-kelas/cari/{id}', [App\Http\Controllers\PemesananKelasController::class, 'findById']);
+    Route::get('pemesanan-kelas', [App\Http\Controllers\PemesananKelasController::class, 'tampilPesanan']);
+    Route::post('pemesanan-kelas', [App\Http\Controllers\PemesananKelasController::class, 'pesanKelas']);
+    Route::get('pemesanan-kelas/{id}', [App\Http\Controllers\PemesananKelasController::class, 'show']);
+    Route::put('pemesanan-kelas/{id}/status', [App\Http\Controllers\PemesananKelasController::class, 'updateStatusPembayaran']);
+    Route::delete('pemesanan-kelas/{id}', [App\Http\Controllers\PemesananKelasController::class, 'hapusPesanan']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
