@@ -12,8 +12,10 @@ Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(function () {
-    Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard']);
+    Route::get('/admin/total', [App\Http\Controllers\AdminController::class, 'totalKeanggotaanPesan']);
+    Route::get('/admin/keuntungan', [App\Http\Controllers\AdminController::class, 'hitungKeuntungan']);
 
+    Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard']);
 
     //pelatih
     Route::get('/pelatih', [App\Http\Controllers\PelatihController::class, 'index']);
