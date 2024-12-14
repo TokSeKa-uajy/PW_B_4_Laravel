@@ -36,6 +36,13 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
     Route::put('/paket-keanggotaan/{id}', [App\Http\Controllers\PaketKeanggotaanController::class, 'update']);
     Route::delete('/paket-keanggotaan/{id}', [App\Http\Controllers\PaketKeanggotaanController::class, 'destroy']);
 
+    //paket kelas
+    Route::get('/paket-kelas', [App\Http\Controllers\PaketKelasController::class, 'index']);
+    Route::post('/paket-kelas', [App\Http\Controllers\PaketKelasController::class, 'store']);
+    Route::get('/paket-kelas/{id}', [App\Http\Controllers\PaketKelasController::class, 'show']);
+    Route::put('/paket-kelas/{id}', [App\Http\Controllers\PaketKelasController::class, 'update']);
+    Route::delete('/paket-kelas/{id}', [App\Http\Controllers\PaketKelasController::class, 'destroy']);
+
     //kelas
     Route::get('/kelas', [App\Http\Controllers\KelasController::class, 'index']);
     Route::post('/kelas', [App\Http\Controllers\KelasController::class, 'store']);
