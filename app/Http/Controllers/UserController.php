@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -47,6 +48,50 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('users.index');
+    }
+
+    /**
+     * Upload foto profil pengguna.
+     */
+    public function registerFoto(Request $request)
+    {
+        // Validasi input file
+        $validator = Validator::make($request->all(), [
+            'profile_picture' => 'required|image|mimes:jpeg,jpg,png|max:2048', // Maksimum 2MB
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        if ($request->hasFile('profile_picture')) {
+            // Ambil data user yang sedang login
+            $user = $request->user();
+
+            // Proses penyimpanan file
+            $file = $request->file('profile_picture');
+            $fileName = $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('profile_pictures', $fileName, 'public');
+
+            // Update path foto profil ke database
+            $user->foto_profil = $path; // Simpan path relatif
+            $user->save();
+
+            return response()->json([
+                'message' => 'Foto profil berhasil diunggah',
+                'data' => [
+                    'user_id' => $user->id,
+                    'foto_profil' => asset('storage/' . $path), // URL lengkap file
+                ],
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'File tidak ditemukan atau tidak valid',
+            ], 422);
+        }
     }
 }
 
