@@ -169,4 +169,31 @@ class PaketKelasController extends Controller
             ], 500);
         }
     }
+
+    public function idPaket($id_kelas)
+    {
+        try {
+            $paketKelas = Paket_kelas::where('id_kelas', $id_kelas)
+                ->select('id_paket_kelas', 'durasi', 'harga')
+                ->get();
+
+            if ($paketKelas->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Tidak ada paket kelas yang ditemukan untuk id_kelas {$id_kelas}.",
+                ], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => $paketKelas,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat mengambil data paket kelas.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 }
