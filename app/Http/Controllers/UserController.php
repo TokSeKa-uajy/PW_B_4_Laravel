@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -63,6 +64,8 @@ class UserController extends Controller
                 ], 404);
             }
 
+            // $fotoProfil = url('user/' . $user->foto_profil);
+
             // Kembalikan data user
             return response()->json([
                 'message' => 'Data profil berhasil diambil.',
@@ -112,8 +115,7 @@ class UserController extends Controller
             $fileName = $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('foto_profils', $fileName, 'public');
 
-            // Update path foto profil ke database
-            $user->foto_profil = $path; // Simpan path relatif
+            $user->foto_profil = $path;
             $user->save();
 
             return response()->json([
@@ -128,6 +130,57 @@ class UserController extends Controller
                 'message' => 'File tidak ditemukan atau tidak valid',
             ], 422);
         }
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        // Validasi input
+        $validatedData = $request->validate([
+            'nama_depan' => 'required|string|max:255',
+            'nama_belakang' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id_user . ',id_user',
+            'nomor_telepon' => 'nullable|string|max:20|unique:users,nomor_telepon,' . $user->id_user . ',id_user',
+            'jenis_kelamin' => 'nullable|in:pria,wanita',
+            'password' => 'nullable|min:8',
+            'foto_profil' => 'nullable|image|max:2048',
+        ]);
+
+        if($request->hasFile('foto_profil')){
+            // kalau kalian membaca ini, ketahuilah bahwa gambar tidak akan bisa diupdate karena menggunakan method PUT ;)
+            // kalian bisa mengubahnya menjadi POST atau PATCH untuk mengupdate gambar
+            $uploadFolder = 'user';
+            $image = $request->file('foto_profil');
+            $image_uploaded_path = $image->store($uploadFolder, 'public');
+            $uploadedImageResponse = basename($image_uploaded_path);
+
+            // hapus data foto_profil yang lama dari storage
+            Storage::disk('public')->delete('user/'.$user->foto_profil);
+
+            // set foto_profil yang baru
+            $user['foto_profil'] = $uploadedImageResponse;
+        }
+
+        // Update data
+        $user->nama_depan = $validatedData['nama_depan'];
+        $user->nama_belakang = $validatedData['nama_belakang'];
+        $user->email = $validatedData['email'];
+        $user->nomor_telepon = $validatedData['nomor_telepon'] ?? $user->nomor_telepon;
+        $user->jenis_kelamin = $validatedData['jenis_kelamin'] ?? $user->jenis_kelamin;
+
+        // Update password jika disediakan
+        if (!empty($validatedData['password'])) {
+            $user->password = Hash::make($validatedData['password']);
+        }
+
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profil berhasil diperbarui.',
+            'data' => $user,
+        ]);
     }
 }
 

@@ -67,6 +67,7 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
 
 Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(function () {
     Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'profile']);
+    Route::post('/user/update-profile', [App\Http\Controllers\UserController::class, 'updateProfile']);
 
     Route::get('/kelas', [App\Http\Controllers\KelasController::class, 'index']);
     Route::get('/kelas/{id}', [App\Http\Controllers\KelasController::class, 'show']);
