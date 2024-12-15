@@ -50,6 +50,42 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
+    public function profile()
+    {
+        try {
+            // Ambil user yang sedang login
+            $user = Auth::user();
+
+            // Jika user tidak ditemukan (tidak login)
+            if (!$user) {
+                return response()->json([
+                    'message' => 'User tidak ditemukan.',
+                ], 404);
+            }
+
+            // Kembalikan data user
+            return response()->json([
+                'message' => 'Data profil berhasil diambil.',
+                'data' => [
+                    'id_user' => $user->id_user,
+                    'email' => $user->email,
+                    'nomor_telepon' => $user->nomor_telepon,
+                    'nama_depan' => $user->nama_depan,
+                    'nama_belakang' => $user->nama_belakang,
+                    'role' => $user->role,
+                    'jenis_kelamin' => $user->jenis_kelamin,
+                    'foto_profil' => $user->foto_profil,
+                ],
+            ], 200);
+        } catch (\Exception $e) {
+            // Jika ada kesalahan
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengambil data profil.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
     /**
      * Upload foto profil pengguna.
      */

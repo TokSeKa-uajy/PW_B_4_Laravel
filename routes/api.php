@@ -21,7 +21,7 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
     Route::get('/pelatih', [App\Http\Controllers\PelatihController::class, 'index']);
     Route::post('/pelatih', [App\Http\Controllers\PelatihController::class, 'store']);
     Route::get('/pelatih/{id}', [App\Http\Controllers\PelatihController::class, 'show']);
-    Route::put('/pelatih/{id}', [App\Http\Controllers\PelatihController::class, 'update']);
+    Route::post('/pelatih/{id}', [App\Http\Controllers\PelatihController::class, 'update']);
     Route::delete('/pelatih/{id}', [App\Http\Controllers\PelatihController::class, 'destroy']);
 
     //kategori kelas

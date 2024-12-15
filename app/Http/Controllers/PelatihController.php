@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Pelatih;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 class PelatihController extends Controller
 {
     // Menampilkan semua pelatih
@@ -36,14 +37,28 @@ class PelatihController extends Controller
     public function store(Request $request)
     {
         try {
-            $validatedData = $request->validate([
+            $storeData = $request->all();
+
+            $validate = Validator::make($storeData, [
                 'nama_depan' => 'required|string|max:255',
                 'nama_belakang' => 'required|string|max:255',
-                'foto_profil' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+                'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'jenis_kelamin' => 'required|in:pria,wanita',
             ]);
 
-            $pelatih = Pelatih::create($validatedData);
+            if ($validate->fails()) {
+                return response(['message'=> $validate->errors()],400);
+            }
+            
+            if ($request->hasFile('foto_profil')) {
+                $uploadFolder = 'pelatih';
+                $image = $request->file('foto_profil');
+                $image_uploaded_path = $image->store($uploadFolder, 'public');
+                $uploadedImageResponse = basename($image_uploaded_path);
+                $storeData['foto_profil'] = $uploadedImageResponse;
+            }
+
+            $pelatih = Pelatih::create($storeData);
 
             return response()->json([
                 'message' => 'Pelatih berhasil ditambahkan.',
@@ -94,15 +109,35 @@ class PelatihController extends Controller
                     'data' => null
                 ], 404); // Status code 404 jika pelatih tidak ditemukan
             }
+            $updateData = $request->all();
 
-            $validatedData = $request->validate([
-                'nama_depan' => 'required|string|max:255',
-                'nama_belakang' => 'required|string|max:255',
-                'foto_profil' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-                'jenis_kelamin' => 'required|in:pria,wanita',
+            $validate = Validator::make($updateData,[
+                'nama_depan' => 'nullable|string|max:255',
+                'nama_belakang' => 'nullable|string|max:255',
+                'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'jenis_kelamin' => 'nullable|in:pria,wanita',
             ]);
 
-            $pelatih->update($validatedData);
+            if ($validate->fails()) {
+                return response(['message'=> $validate->errors()],400);
+            }
+
+            if($request->hasFile('foto_profil')){
+                // kalau kalian membaca ini, ketahuilah bahwa gambar tidak akan bisa diupdate karena menggunakan method PUT ;)
+                // kalian bisa mengubahnya menjadi POST atau PATCH untuk mengupdate gambar
+                $uploadFolder = 'pelatih';
+                $image = $request->file('foto_profil');
+                $image_uploaded_path = $image->store($uploadFolder, 'public');
+                $uploadedImageResponse = basename($image_uploaded_path);
+    
+                // hapus data foto_profil yang lama dari storage
+                Storage::disk('public')->delete('pelatih/'.$pelatih->foto_profil);
+    
+                // set foto_profil yang baru
+                $updateData['foto_profil'] = $uploadedImageResponse;
+            }
+
+            $pelatih->update($updateData);
 
             return response()->json([
                 'message' => 'Data pelatih berhasil diperbarui.',
