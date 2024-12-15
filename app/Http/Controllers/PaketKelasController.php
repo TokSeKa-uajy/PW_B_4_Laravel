@@ -152,4 +152,21 @@ class PaketKelasController extends Controller
             ], 500);
         }
     }
+
+    public function indexKelas($idKelas)
+    {
+        try {
+            $paketKelas = Paket_kelas::where('id_kelas', $idKelas)->get()->all();
+
+            return response()->json([
+                'message' => 'Data paket kelas berhasil diambil.',
+                'data' => $paketKelas,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengambil data paket kelas.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 }

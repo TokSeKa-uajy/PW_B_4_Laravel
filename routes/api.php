@@ -40,6 +40,7 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
 
     //paket kelas
     Route::get('/paket-kelas', [App\Http\Controllers\PaketKelasController::class, 'index']);
+    Route::get('/paket-kelas/{idKelas}', [App\Http\Controllers\PaketKelasController::class, 'indexKelas']);
     Route::post('/paket-kelas', [App\Http\Controllers\PaketKelasController::class, 'store']);
     Route::get('/paket-kelas/{id}', [App\Http\Controllers\PaketKelasController::class, 'show']);
     Route::put('/paket-kelas/{id}', [App\Http\Controllers\PaketKelasController::class, 'update']);
