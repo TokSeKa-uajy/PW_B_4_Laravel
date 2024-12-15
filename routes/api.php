@@ -52,6 +52,13 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
     Route::get('/kelas/{id}', [App\Http\Controllers\KelasController::class, 'show']);
     Route::put('/kelas/{id}', [App\Http\Controllers\KelasController::class, 'update']);
     Route::delete('/kelas/{id}', [App\Http\Controllers\KelasController::class, 'destroy']);
+
+    //add kategori
+    Route::get('/add-kategoris', [App\Http\Controllers\Api\AddKategoriController::class, 'index']);
+    Route::post('/add-kategoris', [App\Http\Controllers\Api\AddKategoriController::class, 'store']);
+    Route::get('/add-kategoris/{id}', [App\Http\Controllers\Api\AddKategoriController::class, 'show']);
+    Route::put('/add-kategoris/update/{id}', [App\Http\Controllers\Api\AddKategoriController::class, 'update']);
+    Route::delete('/add-kategoris/delete/{id}', [App\Http\Controllers\Api\AddKategoriController::class, 'destroy']);
 });
 
 Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(function () {
