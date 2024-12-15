@@ -68,20 +68,16 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
 Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(function () {
     Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'profile']);
 
-    //paket keanggotaan
-    Route::get('/paket-keanggotaan', [App\Http\Controllers\PaketKeanggotaanController::class, 'index']);
-    Route::post('/paket-keanggotaan', [App\Http\Controllers\PaketKeanggotaanController::class, 'store']);
-    Route::get('/paket-keanggotaan/{id}', [App\Http\Controllers\PaketKeanggotaanController::class, 'show']);
-    Route::put('/paket-keanggotaan/{id}', [App\Http\Controllers\PaketKeanggotaanController::class, 'update']);
-    Route::delete('/paket-keanggotaan/{id}', [App\Http\Controllers\PaketKeanggotaanController::class, 'destroy']);
+    Route::get('/kelas', [App\Http\Controllers\KelasController::class, 'index']);
+    Route::get('/kelas/{id}', [App\Http\Controllers\KelasController::class, 'show']);
+    Route::get('/kategori-kelas', [App\Http\Controllers\KategoriKelasController::class, 'index']);
+    Route::get('/paket-kelas/cari/{id}', [App\Http\Controllers\PaketKelasController::class, 'idPaket']);
 
     //pemesanan kelas
     Route::get('pemesanan-kelas/cari/{id}', [App\Http\Controllers\PemesananKelasController::class, 'findById']);
     Route::get('pemesanan-kelas', [App\Http\Controllers\PemesananKelasController::class, 'tampilPesanan']);
     Route::post('pemesanan-kelas', [App\Http\Controllers\PemesananKelasController::class, 'pesanKelas']);
     Route::get('pemesanan-kelas/{id}', [App\Http\Controllers\PemesananKelasController::class, 'show']);
-    Route::put('pemesanan-kelas/{id}/status', [App\Http\Controllers\PemesananKelasController::class, 'updateStatusPembayaran']);
-    Route::delete('pemesanan-kelas/{id}', [App\Http\Controllers\PemesananKelasController::class, 'hapusPesanan']);
 
     //registrasi keanggotaan
     Route::post('/registrasi-keanggotaan', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'store']);
