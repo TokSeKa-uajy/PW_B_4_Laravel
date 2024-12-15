@@ -30,6 +30,22 @@ class PemesananKelasController extends Controller
         ], 200);
     }
 
+    public function allPesananKelas()
+    {
+        $pemesanan = Pemesanan_kelas::all();
+
+        if (!$pemesanan) {
+            return response()->json([
+                'message' => 'Pemesanan dengan ID tersebut tidak ditemukan.',
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Pemesanan berhasil ditemukan.',
+            'data' => $pemesanan,
+        ], 200);
+    }
+
     // Menampilkan semua pesanan pengguna
     public function tampilPesanan(Request $request)
     {

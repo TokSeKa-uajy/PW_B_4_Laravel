@@ -98,4 +98,30 @@ public function checkMembershipStatus(Request $request)
             'message' => $exists ? 'Keanggotaan ditemukan.' : 'Keanggotaan tidak ditemukan.'
         ], 200);
     }
+
+    public function index()
+    {
+        try {
+            $registrasi = Registrasi_keanggotaan::with(['user', 'paket_keanggotaan'])->get();
+
+            if ($registrasi->isEmpty()) {
+                return response()->json([
+                    'message' => 'Tidak ada data registrasi keanggotaan yang ditemukan.',
+                    'data' => []
+                ], 404);
+            }
+
+            // Jika data ditemukan
+            return response()->json([
+                'message' => 'Data registrasi keanggotaan berhasil diambil.',
+                'data' => $registrasi
+            ], 200);
+        } catch (\Exception $e) {
+            // Jika terjadi error
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengambil data registrasi keanggotaan.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
