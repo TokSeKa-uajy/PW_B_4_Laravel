@@ -59,10 +59,21 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
     Route::get('/add-kategoris/{id}', [App\Http\Controllers\Api\AddKategoriController::class, 'show']);
     Route::put('/add-kategoris/update/{id}', [App\Http\Controllers\Api\AddKategoriController::class, 'update']);
     Route::delete('/add-kategoris/delete/{id}', [App\Http\Controllers\Api\AddKategoriController::class, 'destroy']);
+
+    // //registrasi keanggotaan
+    // Route::post('/registrasi-keanggotaan', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'store']);
+    // Route::get('/registrasi-keanggotaan', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'checkMembershipStatus']);
 });
 
 Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(function () {
     Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'profile']);
+
+    //paket keanggotaan
+    Route::get('/paket-keanggotaan', [App\Http\Controllers\PaketKeanggotaanController::class, 'index']);
+    Route::post('/paket-keanggotaan', [App\Http\Controllers\PaketKeanggotaanController::class, 'store']);
+    Route::get('/paket-keanggotaan/{id}', [App\Http\Controllers\PaketKeanggotaanController::class, 'show']);
+    Route::put('/paket-keanggotaan/{id}', [App\Http\Controllers\PaketKeanggotaanController::class, 'update']);
+    Route::delete('/paket-keanggotaan/{id}', [App\Http\Controllers\PaketKeanggotaanController::class, 'destroy']);
 
     //pemesanan kelas
     Route::get('pemesanan-kelas/cari/{id}', [App\Http\Controllers\PemesananKelasController::class, 'findById']);
@@ -74,7 +85,7 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(func
 
     //registrasi keanggotaan
     Route::post('/registrasi-keanggotaan', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'store']);
-    Route::get('/registrasi-keanggotaan', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'showByUser']);
+    Route::get('/registrasi-keanggotaan', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'checkMembershipStatus']);
 
     //keanggotaan
     Route::post('/keanggotaan', [App\Http\Controllers\KeanggotaanController::class, 'registerMembership']);
@@ -86,6 +97,10 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(func
     Route::get('/umpan-balik/{id}', [App\Http\Controllers\UmpanBalikController::class, 'show']);
     Route::put('/umpan-balik/{id}', [App\Http\Controllers\UmpanBalikController::class, 'update']);
     Route::delete('/umpan-balik/{id}', [App\Http\Controllers\UmpanBalikController::class, 'destroy']);
+
+    // kelas
+    Route::get('/paket-kelas', [App\Http\Controllers\PaketKelasController::class, 'index']);
+    Route::get('/paket-kelas/{idKelas}', [App\Http\Controllers\PaketKelasController::class, 'indexKelas']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {

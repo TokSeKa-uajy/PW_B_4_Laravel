@@ -71,17 +71,31 @@ class RegistrasiKeanggotaanController extends Controller
     }
 
     //tampil riwayat
-    public function showByUser(Request $request)
+    // public function showByUser(Request $request)
+    // {
+    //     $user = $request->user();
+
+    //     $riwayat = Registrasi_keanggotaan::with('paket_keanggotaan')
+    //         ->where('id_user', $user->id_user)
+    //         ->get();
+
+    //     return response()->json([
+    //         'message' => 'Riwayat pembayaran berhasil diambil.',
+    //         'data' => $riwayat,
+    //     ], 200);
+    // }
+
+public function checkMembershipStatus(Request $request)
     {
         $user = $request->user();
 
-        $riwayat = Registrasi_keanggotaan::with('paket_keanggotaan')
-            ->where('id_user', $user->id_user)
-            ->get();
+        // Cek apakah ada data dengan id_user di tabel registrasi_keanggotaan
+        $exists = Registrasi_keanggotaan::where('id_user', $user->id_user)->exists();
 
+        // Mengembalikan response boolean
         return response()->json([
-            'message' => 'Riwayat pembayaran berhasil diambil.',
-            'data' => $riwayat,
+            'status' => $exists,
+            'message' => $exists ? 'Keanggotaan ditemukan.' : 'Keanggotaan tidak ditemukan.'
         ], 200);
     }
 }
