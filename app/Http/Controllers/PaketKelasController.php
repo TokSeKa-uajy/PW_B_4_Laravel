@@ -33,7 +33,7 @@ class PaketKelasController extends Controller
         try {
             $validated = $request->validate([
                 'id_kelas' => 'required|exists:kelas,id_kelas',
-                'durasi' => 'required|in:1_minggu,1_bulan,6_bulan',
+                'durasi' => 'required|in:1_bulan,6_bulan,1_tahun',
                 'harga' => 'required|numeric|min:0',
             ]);
 
