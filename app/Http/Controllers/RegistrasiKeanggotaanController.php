@@ -14,8 +14,9 @@ class RegistrasiKeanggotaanController extends Controller
     //riwayat pembayaran
     public function store(Request $request)
     {
+        $user = $request->user();
+
         $validated = $request->validate([
-            'id_user' => 'required|exists:users,id_user',
             'id_paket_keanggotaan' => 'required|exists:paket_keanggotaan,id_paket_keanggotaan',
             'jenis_pembayaran' => 'required|in:Kartu Kredit,Kartu Debit,E Wallet',
         ]);
@@ -33,7 +34,7 @@ class RegistrasiKeanggotaanController extends Controller
 
         // Simpan pembayaran
         $registrasi = Registrasi_keanggotaan::create([
-            'id_user' => $validated['id_user'],
+            'id_user' => $user->id_user,
             'id_paket_keanggotaan' => $validated['id_paket_keanggotaan'],
             'tanggal_pembayaran' => now(),
             'total_pembayaran' => $paket->harga,
