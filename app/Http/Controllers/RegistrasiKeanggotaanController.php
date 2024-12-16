@@ -124,4 +124,29 @@ public function checkMembershipStatus(Request $request)
             ], 500);
         }
     }
+
+    public function getAllRegistrasiKeanggotaanByID(Request $request)
+    {
+        $user = $request->user();
+
+        // Ambil semua data registrasi berdasarkan id_user
+        $registrasiKeanggotaan = Registrasi_keanggotaan::where('id_user', $user->id_user)
+            // ->with('paketKeanggotaan') // Jika Anda memiliki relasi ke tabel paket_keanggotaan
+            ->get();
+
+        // Periksa apakah data ditemukan
+        if ($registrasiKeanggotaan->isEmpty()) {
+            return response()->json([
+                'message' => 'Keanggotaan tidak ditemukan.',
+                'data' => []
+            ], 404);
+        }
+
+        // Kembalikan response dengan data registrasi keanggotaan
+        return response()->json([
+            'message' => 'Keanggotaan ditemukan.',
+            'data' => $registrasiKeanggotaan
+        ], 200);
+    }
+
 }

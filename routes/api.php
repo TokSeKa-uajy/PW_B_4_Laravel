@@ -85,7 +85,9 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(func
 
     //registrasi keanggotaan
     Route::post('/registrasi-keanggotaan', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'store']);
-    Route::get('/registrasi-keanggotaan', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'checkMembershipStatus']);
+    Route::get('/registrasi-keanggotaan-checkStatus', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'checkMembershipStatus']);
+    Route::get('/registrasi-keanggotaan', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'index']);
+    Route::get('/registrasi-keanggotaan-user', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'getAllRegistrasiKeanggotaanByID']);
 
     //keanggotaan
     Route::post('/keanggotaan', [App\Http\Controllers\KeanggotaanController::class, 'registerMembership']);
@@ -101,6 +103,9 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(func
     // kelas
     Route::get('/paket-kelas', [App\Http\Controllers\PaketKelasController::class, 'index']);
     Route::get('/paket-kelas/{idKelas}', [App\Http\Controllers\PaketKelasController::class, 'indexKelas']);
+
+    //paket keanggotaan
+    Route::get('/paket-keanggotaan-user', [App\Http\Controllers\PaketKeanggotaanController::class, 'index']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
