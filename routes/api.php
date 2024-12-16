@@ -28,7 +28,7 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
     Route::delete('/pelatih/{id}', [App\Http\Controllers\PelatihController::class, 'destroy']);
 
     //kategori kelas
-    Route::get('/kategori-kelas', [App\Http\Controllers\KategoriKelasController::class, 'index']);
+    
     Route::post('/kategori-kelas', [App\Http\Controllers\KategoriKelasController::class, 'store']);
     Route::get('/kategori-kelas/{id}', [App\Http\Controllers\KategoriKelasController::class, 'show']);
     Route::put('/kategori-kelas/{id}', [App\Http\Controllers\KategoriKelasController::class, 'update']);
@@ -50,7 +50,7 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
     Route::delete('/paket-kelas/{id}', [App\Http\Controllers\PaketKelasController::class, 'destroy']);
 
     //kelas
-    Route::get('/kelas', [App\Http\Controllers\KelasController::class, 'index']);
+    // show dipindah ke deket logout
     Route::post('/kelas', [App\Http\Controllers\KelasController::class, 'store']);
     Route::get('/kelas/{id}', [App\Http\Controllers\KelasController::class, 'show']);
     Route::put('/kelas/{id}', [App\Http\Controllers\KelasController::class, 'update']);
@@ -72,9 +72,9 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(func
     Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'profile']);
     Route::post('/user/update-profile', [App\Http\Controllers\UserController::class, 'updateProfile']);
 
-    Route::get('/kelas', [App\Http\Controllers\KelasController::class, 'index']);
+    Route::get('/kelas-user', [App\Http\Controllers\KelasController::class, 'index']);
     Route::get('/kelas/{id}', [App\Http\Controllers\KelasController::class, 'show']);
-    Route::get('/kategori-kelas', [App\Http\Controllers\KategoriKelasController::class, 'index']);
+    Route::get('/kategori-kelas-user', [App\Http\Controllers\KategoriKelasController::class, 'index']);
     Route::get('/paket-kelas/cari/{id}', [App\Http\Controllers\PaketKelasController::class, 'idPaket']);
 
     //pemesanan kelas
@@ -82,6 +82,7 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(func
     Route::get('pemesanan-kelas', [App\Http\Controllers\PemesananKelasController::class, 'tampilPesanan']);
     Route::post('pemesanan-kelas', [App\Http\Controllers\PemesananKelasController::class, 'pesanKelas']);
     Route::get('pemesanan-kelas/{id}', [App\Http\Controllers\PemesananKelasController::class, 'show']);
+    Route::get('pemesanan-kelas-user', [App\Http\Controllers\PemesananKelasController::class, 'allById']);
 
     //registrasi keanggotaan
     Route::post('/registrasi-keanggotaan', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'store']);
@@ -94,7 +95,7 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(func
     Route::get('/keanggotaan', [App\Http\Controllers\KeanggotaanController::class, 'showByUser']);
 
     //umpan balik
-    Route::get('/umpan-balik', [App\Http\Controllers\UmpanBalikController::class, 'index']);
+    
     Route::post('/umpan-balik', [App\Http\Controllers\UmpanBalikController::class, 'store']);
     Route::get('/umpan-balik/{id}', [App\Http\Controllers\UmpanBalikController::class, 'show']);
     Route::put('/umpan-balik/{id}', [App\Http\Controllers\UmpanBalikController::class, 'update']);
@@ -105,10 +106,13 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(func
     Route::get('/paket-kelas/{idKelas}', [App\Http\Controllers\PaketKelasController::class, 'indexKelas']);
 
     //paket keanggotaan
-    Route::get('/paket-keanggotaan-user', [App\Http\Controllers\PaketKeanggotaanController::class, 'index']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
-
+    // Show dan index for all
+    Route::get('/kelas', [App\Http\Controllers\KelasController::class, 'index']);
+    Route::get('/kategori-kelas', [App\Http\Controllers\KategoriKelasController::class, 'index']);
+    Route::get('/umpan-balik', [App\Http\Controllers\UmpanBalikController::class, 'index']);
+    Route::get('/paket-keanggotaan-user', [App\Http\Controllers\PaketKeanggotaanController::class, 'index']);
 });

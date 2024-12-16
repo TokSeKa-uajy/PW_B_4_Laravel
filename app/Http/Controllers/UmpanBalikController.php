@@ -36,7 +36,7 @@ class UmpanBalikController extends Controller
     // Lihat semua umpan balik
     public function index()
     {
-        $umpanBalik = Umpan_balik::with(['user', 'pemesananKelas'])->get();
+        $umpanBalik = Umpan_balik::with('pemesanan_kelas.paket_kelas.kelas')->get();
 
         return response()->json([
             'message' => 'Data umpan balik berhasil diambil.',

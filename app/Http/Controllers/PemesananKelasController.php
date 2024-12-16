@@ -124,4 +124,38 @@ class PemesananKelasController extends Controller
             'data' => $pemesanan,
         ], 200);
     }
+
+    public function allById(Request $request)
+    {
+        $user = $request->user();
+
+        // Ambil pemesanan yang termasuk relasi paket_kelas dan kelas
+        $pemesanan = Pemesanan_kelas::where('id_user', $user->id_user)
+            ->with('paket_kelas.kelas') // Ambil relasi paket_kelas dan kelas
+            ->get();
+
+        if ($pemesanan->isEmpty()) {
+            return response()->json([
+                'message' => 'Pemesanan dengan ID tersebut tidak ditemukan.',
+                'data' => [],
+            ], 404);
+        }
+
+        // Ambil hanya data kelas dari pemesanan + id_pemesanan_kelas
+        $kelas = $pemesanan->map(function ($pemesanan) {
+            return [
+                'id_pemesanan_kelas' => $pemesanan->id_pemesanan_kelas, // Tambahkan id_pemesanan_kelas
+                'kelas' => $pemesanan->paket_kelas->kelas ?? null, // Data kelas
+            ];
+        })->filter(function ($item) {
+            return $item['kelas'] !== null; // Hapus jika kelas null
+        });
+
+        return response()->json([
+            'message' => 'Pemesanan berhasil ditemukan.',
+            'data' => $kelas->values(), // Reset indeks array
+        ], 200);
+    }
+
+
 }
