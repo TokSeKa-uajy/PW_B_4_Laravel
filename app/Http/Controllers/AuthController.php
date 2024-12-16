@@ -82,7 +82,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'You are a regular user'], 200);
     }
 
-    // Menambahkan metode checkMembershipExpiry di AuthController
     public function checkMembershipExpiry($userId)
     {
         $keanggotaan = Keanggotaan::where('id_user', $userId)->first();

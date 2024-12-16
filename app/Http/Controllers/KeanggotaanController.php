@@ -30,7 +30,6 @@ class KeanggotaanController extends Controller
             ], 404);
         }
 
-        // Menghitung tanggal berakhir berdasarkan durasi paket
         $tanggalBerakhir = Carbon::parse($validated['tanggal_mulai']);
         switch ($paket->durasi) {
             case '1_bulan':
@@ -48,7 +47,6 @@ class KeanggotaanController extends Controller
                 ], 400);
         }
 
-        // Simpan data keanggotaan
         $keanggotaan = Keanggotaan::updateOrCreate(
             ['id_user' => $user->id_user],
             [

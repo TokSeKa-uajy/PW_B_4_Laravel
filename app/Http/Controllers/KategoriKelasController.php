@@ -7,7 +7,6 @@ use App\Models\Kategori_kelas;
 
 class KategoriKelasController extends Controller
 {
-    // Menampilkan semua kategori kelas
     public function index()
     {
         try {
@@ -32,7 +31,6 @@ class KategoriKelasController extends Controller
         }
     }
 
-    // Menambahkan kategori kelas baru
     public function store(Request $request)
     {
         try {
@@ -55,7 +53,6 @@ class KategoriKelasController extends Controller
         }
     }
 
-    // Menampilkan kategori kelas berdasarkan ID
     public function show($id)
     {
         try {
@@ -80,7 +77,6 @@ class KategoriKelasController extends Controller
         }
     }
 
-    // Memperbarui data kategori kelas
     public function update(Request $request, $id)
     {
         try {
@@ -112,7 +108,6 @@ class KategoriKelasController extends Controller
         }
     }
 
-    // Menghapus kategori kelas
     public function destroy($id)
     {
         try {
