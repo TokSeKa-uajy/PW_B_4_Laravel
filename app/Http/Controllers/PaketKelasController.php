@@ -97,7 +97,7 @@ class PaketKelasController extends Controller
 
             $validated = $request->validate([
                 'id_kelas' => 'sometimes|exists:kelas,id_kelas',
-                'durasi' => 'sometimes|in:1_minggu,1_bulan,6_bulan',
+                'durasi' => 'sometimes|in:1_bulan,6_bulan,1_tahun',
                 'harga' => 'sometimes|numeric|min:0',
             ]);
 

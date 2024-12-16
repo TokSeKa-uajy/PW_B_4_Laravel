@@ -21,28 +21,28 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
     Route::get('/registrasi-keanggotaan-admin', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'index']);
 
     //pelatih
-    Route::get('/pelatih', [App\Http\Controllers\PelatihController::class, 'index']);
+
     Route::post('/pelatih', [App\Http\Controllers\PelatihController::class, 'store']);
     Route::get('/pelatih/{id}', [App\Http\Controllers\PelatihController::class, 'show']);
     Route::post('/pelatih/{id}', [App\Http\Controllers\PelatihController::class, 'update']);
     Route::delete('/pelatih/{id}', [App\Http\Controllers\PelatihController::class, 'destroy']);
 
     //kategori kelas
-    
+
     Route::post('/kategori-kelas', [App\Http\Controllers\KategoriKelasController::class, 'store']);
     Route::get('/kategori-kelas/{id}', [App\Http\Controllers\KategoriKelasController::class, 'show']);
     Route::put('/kategori-kelas/{id}', [App\Http\Controllers\KategoriKelasController::class, 'update']);
     Route::delete('/kategori-kelas/{id}', [App\Http\Controllers\KategoriKelasController::class, 'destroy']);
 
     //paket keanggotaan
-    Route::get('/paket-keanggotaan', [App\Http\Controllers\PaketKeanggotaanController::class, 'index']);
+
     Route::post('/paket-keanggotaan', [App\Http\Controllers\PaketKeanggotaanController::class, 'store']);
     Route::get('/paket-keanggotaan/{id}', [App\Http\Controllers\PaketKeanggotaanController::class, 'show']);
     Route::put('/paket-keanggotaan/{id}', [App\Http\Controllers\PaketKeanggotaanController::class, 'update']);
     Route::delete('/paket-keanggotaan/{id}', [App\Http\Controllers\PaketKeanggotaanController::class, 'destroy']);
 
     //paket kelas
-    Route::get('/paket-kelas-admin', [App\Http\Controllers\PaketKelasController::class, 'index']);
+
     Route::get('/paket-kelas/{idKelas}', [App\Http\Controllers\PaketKelasController::class, 'indexKelas']);
     Route::post('/paket-kelas', [App\Http\Controllers\PaketKelasController::class, 'store']);
     Route::get('/paket-kelas/{id}', [App\Http\Controllers\PaketKelasController::class, 'show']);
@@ -93,21 +93,15 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(func
     Route::get('/keanggotaan', [App\Http\Controllers\KeanggotaanController::class, 'showByUser']);
 
     //umpan balik
-    
+
     Route::post('/umpan-balik', [App\Http\Controllers\UmpanBalikController::class, 'store']);
     Route::get('/umpan-balik/{id}', [App\Http\Controllers\UmpanBalikController::class, 'show']);
     Route::put('/umpan-balik/{id}', [App\Http\Controllers\UmpanBalikController::class, 'update']);
     Route::delete('/umpan-balik/{id}', [App\Http\Controllers\UmpanBalikController::class, 'destroy']);
-
-    // kelas
-    Route::get('/paket-kelas', [App\Http\Controllers\PaketKelasController::class, 'index']);
-    Route::get('/paket-kelas/{idKelas}', [App\Http\Controllers\PaketKelasController::class, 'indexKelas']);
-
-    //paket keanggotaan
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    
+
     Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'profile']);
     Route::post('/user/update-profile', [App\Http\Controllers\UserController::class, 'updateProfile']);
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
@@ -116,4 +110,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/kategori-kelas', [App\Http\Controllers\KategoriKelasController::class, 'index']);
     Route::get('/umpan-balik', [App\Http\Controllers\UmpanBalikController::class, 'index']);
     Route::get('/paket-keanggotaan-user', [App\Http\Controllers\PaketKeanggotaanController::class, 'index']);
+    Route::get('/paket-keanggotaan', [App\Http\Controllers\PaketKeanggotaanController::class, 'index']);
+    Route::get('/paket-kelas-admin', [App\Http\Controllers\PaketKelasController::class, 'index']);
+    Route::get('/pelatih', [App\Http\Controllers\PelatihController::class, 'index']);
+    Route::get('/paket-kelas', [App\Http\Controllers\PaketKelasController::class, 'index']);
+    Route::get('/paket-kelas/{idKelas}', [App\Http\Controllers\PaketKelasController::class, 'indexKelas']);
 });
