@@ -69,8 +69,6 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
 });
 
 Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(function () {
-    Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'profile']);
-    Route::post('/user/update-profile', [App\Http\Controllers\UserController::class, 'updateProfile']);
 
     Route::get('/kelas-user', [App\Http\Controllers\KelasController::class, 'index']);
     Route::get('/kelas/{id}', [App\Http\Controllers\KelasController::class, 'show']);
@@ -109,6 +107,9 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':user'])->group(func
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    
+    Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'profile']);
+    Route::post('/user/update-profile', [App\Http\Controllers\UserController::class, 'updateProfile']);
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
     // Show dan index for all
     Route::get('/kelas', [App\Http\Controllers\KelasController::class, 'index']);
