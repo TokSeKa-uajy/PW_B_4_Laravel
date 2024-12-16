@@ -131,7 +131,7 @@ class PemesananKelasController extends Controller
 
         // Ambil pemesanan yang termasuk relasi paket_kelas dan kelas
         $pemesanan = Pemesanan_kelas::where('id_user', $user->id_user)
-            ->with('paket_kelas.kelas') // Ambil relasi paket_kelas dan kelas
+            ->with(['paket_kelas.kelas.pelatih', 'paket_kelas.kelas.kategori']) // Ambil relasi paket_kelas dan kelas
             ->get();
 
         if ($pemesanan->isEmpty()) {
