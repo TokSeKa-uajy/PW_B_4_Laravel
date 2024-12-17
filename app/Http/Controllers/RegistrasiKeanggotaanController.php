@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Keanggotaan;
 use Illuminate\Http\Request;
 use App\Models\Registrasi_keanggotaan;
 use App\Models\Paket_keanggotaan;
@@ -32,7 +33,6 @@ class RegistrasiKeanggotaanController extends Controller
             ], 404);
         }
 
-        // Simpan pembayaran
         $registrasi = Registrasi_keanggotaan::create([
             'id_user' => $user->id_user,
             'id_paket_keanggotaan' => $validated['id_paket_keanggotaan'],
@@ -41,7 +41,6 @@ class RegistrasiKeanggotaanController extends Controller
             'jenis_pembayaran' => $validated['jenis_pembayaran'],
         ]);
 
-        // Lanjutkan proses keanggotaan
         $keanggotaanController = new KeanggotaanController();
         $keanggotaanRequest = new Request([
             'id_paket_keanggotaan' => $validated['id_paket_keanggotaan'],
@@ -70,29 +69,12 @@ class RegistrasiKeanggotaanController extends Controller
         ], 201);
     }
 
-    //tampil riwayat
-    // public function showByUser(Request $request)
-    // {
-    //     $user = $request->user();
-
-    //     $riwayat = Registrasi_keanggotaan::with('paket_keanggotaan')
-    //         ->where('id_user', $user->id_user)
-    //         ->get();
-
-    //     return response()->json([
-    //         'message' => 'Riwayat pembayaran berhasil diambil.',
-    //         'data' => $riwayat,
-    //     ], 200);
-    // }
-
 public function checkMembershipStatus(Request $request)
     {
         $user = $request->user();
 
-        // Cek apakah ada data dengan id_user di tabel registrasi_keanggotaan
-        $exists = Registrasi_keanggotaan::where('id_user', $user->id_user)->exists();
+        $exists = Keanggotaan::where('id_user', $user->id_user)->exists();
 
-        // Mengembalikan response boolean
         return response()->json([
             'status' => $exists,
             'message' => $exists ? 'Keanggotaan ditemukan.' : 'Keanggotaan tidak ditemukan.'
@@ -129,9 +111,7 @@ public function checkMembershipStatus(Request $request)
     {
         $user = $request->user();
 
-        // Ambil semua data registrasi berdasarkan id_user
         $registrasiKeanggotaan = Registrasi_keanggotaan::where('id_user', $user->id_user)
-            // ->with('paketKeanggotaan') // Jika Anda memiliki relasi ke tabel paket_keanggotaan
             ->get();
 
         // Periksa apakah data ditemukan
@@ -142,7 +122,6 @@ public function checkMembershipStatus(Request $request)
             ], 404);
         }
 
-        // Kembalikan response dengan data registrasi keanggotaan
         return response()->json([
             'message' => 'Keanggotaan ditemukan.',
             'data' => $registrasiKeanggotaan

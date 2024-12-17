@@ -10,21 +10,17 @@ class UmpanBalikController extends Controller
     // Tambah umpan balik
     public function store(Request $request)
     {
-        // Ambil user yang sedang login
         $user = $request->user();
 
-        // Validasi input
         $data = $request->validate([
             'id_pemesanan_kelas' => 'required|exists:pemesanan_kelas,id_pemesanan_kelas',
             'rating' => 'nullable|integer|min:1|max:5',
             'komentar' => 'nullable|string|max:255',
         ]);
 
-        // Tambahkan ID user secara otomatis
         $data['id_user'] = $user->id_user;
         $data['tanggal_umpan_balik'] = now();
 
-        // Simpan data umpan balik
         $umpanBalik = Umpan_balik::create($data);
 
         return response()->json([

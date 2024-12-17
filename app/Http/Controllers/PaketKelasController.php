@@ -37,7 +37,6 @@ class PaketKelasController extends Controller
                 'harga' => 'required|numeric|min:0',
             ]);
 
-            // Membuat paket kelas dengan menambahkan id_kelas
             $paketKelas = Paket_kelas::create([
                 'id_kelas' => $validated['id_kelas'],
                 'durasi' => $validated['durasi'],

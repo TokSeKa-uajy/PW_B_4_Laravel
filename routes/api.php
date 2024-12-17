@@ -15,7 +15,6 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
     Route::get('/admin/total', [App\Http\Controllers\AdminController::class, 'totalKeanggotaanPesan']);
     Route::get('/admin/keuntungan', [App\Http\Controllers\AdminController::class, 'hitungKeuntungan']);
 
-    Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard']);
     Route::get('/pemesanan-all-kelas', [App\Http\Controllers\PemesananKelasController::class, 'allPesananKelas']);
 
     Route::get('/registrasi-keanggotaan-admin', [App\Http\Controllers\RegistrasiKeanggotaanController::class, 'index']);
@@ -50,13 +49,6 @@ Route::middleware(['auth:sanctum', RoleMiddleware::class . ':admin'])->group(fun
     Route::get('/kelas/{id}', [App\Http\Controllers\KelasController::class, 'show']);
     Route::put('/kelas/{id}', [App\Http\Controllers\KelasController::class, 'update']);
     Route::delete('/kelas/{id}', [App\Http\Controllers\KelasController::class, 'destroy']);
-
-    //add kategori
-    Route::get('/add-kategoris', [App\Http\Controllers\Api\AddKategoriController::class, 'index']);
-    Route::post('/add-kategoris', [App\Http\Controllers\Api\AddKategoriController::class, 'store']);
-    Route::get('/add-kategoris/{id}', [App\Http\Controllers\Api\AddKategoriController::class, 'show']);
-    Route::put('/add-kategoris/update/{id}', [App\Http\Controllers\Api\AddKategoriController::class, 'update']);
-    Route::delete('/add-kategoris/delete/{id}', [App\Http\Controllers\Api\AddKategoriController::class, 'destroy']);
 
 });
 
@@ -101,9 +93,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/kategori-kelas', [App\Http\Controllers\KategoriKelasController::class, 'index']);
     Route::get('/umpan-balik', [App\Http\Controllers\UmpanBalikController::class, 'index']);
     Route::get('/paket-keanggotaan-user', [App\Http\Controllers\PaketKeanggotaanController::class, 'index']);
-    Route::get('/paket-keanggotaan', [App\Http\Controllers\PaketKeanggotaanController::class, 'index']);
     Route::get('/paket-kelas-admin', [App\Http\Controllers\PaketKelasController::class, 'index']);
     Route::get('/pelatih', [App\Http\Controllers\PelatihController::class, 'index']);
-    Route::get('/paket-kelas', [App\Http\Controllers\PaketKelasController::class, 'index']);
-    Route::get('/paket-kelas/{idKelas}', [App\Http\Controllers\PaketKelasController::class, 'indexKelas']);
 });

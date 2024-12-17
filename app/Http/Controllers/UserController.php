@@ -54,19 +54,14 @@ class UserController extends Controller
     public function profile()
     {
         try {
-            // Ambil user yang sedang login
             $user = Auth::user();
 
-            // Jika user tidak ditemukan (tidak login)
             if (!$user) {
                 return response()->json([
                     'message' => 'User tidak ditemukan.',
                 ], 404);
             }
 
-            // $fotoProfil = url('user/' . $user->foto_profil);
-
-            // Kembalikan data user
             return response()->json([
                 'message' => 'Data profil berhasil diambil.',
                 'data' => [
@@ -96,7 +91,7 @@ class UserController extends Controller
     {
         // Validasi input file
         $validator = Validator::make($request->all(), [
-            'foto_profil' => 'required|image|mimes:jpeg,jpg,png|max:2048', // Maksimum 2MB
+            'foto_profil' => 'required|image|mimes:jpeg,jpg,png|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -107,10 +102,8 @@ class UserController extends Controller
         }
 
         if ($request->hasFile('foto_profil')) {
-            // Ambil data user yang sedang login
             $user = $request->user();
 
-            // Proses penyimpanan file
             $file = $request->file('foto_profil');
             $fileName = $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('foto_profils', $fileName, 'public');
@@ -122,7 +115,7 @@ class UserController extends Controller
                 'message' => 'Foto profil berhasil diunggah',
                 'data' => [
                     'user_id' => $user->id,
-                    'foto_profil' => asset('storage/' . $path), // URL lengkap file
+                    'foto_profil' => asset('storage/' . $path),
                 ],
             ], 200);
         } else {
@@ -148,28 +141,22 @@ class UserController extends Controller
         ]);
 
         if($request->hasFile('foto_profil')){
-            // kalau kalian membaca ini, ketahuilah bahwa gambar tidak akan bisa diupdate karena menggunakan method PUT ;)
-            // kalian bisa mengubahnya menjadi POST atau PATCH untuk mengupdate gambar
             $uploadFolder = 'user';
             $image = $request->file('foto_profil');
             $image_uploaded_path = $image->store($uploadFolder, 'public');
             $uploadedImageResponse = basename($image_uploaded_path);
 
-            // hapus data foto_profil yang lama dari storage
             Storage::disk('public')->delete('user/'.$user->foto_profil);
 
-            // set foto_profil yang baru
             $user['foto_profil'] = $uploadedImageResponse;
         }
 
-        // Update data
         $user->nama_depan = $validatedData['nama_depan'];
         $user->nama_belakang = $validatedData['nama_belakang'];
         $user->email = $validatedData['email'];
         $user->nomor_telepon = $validatedData['nomor_telepon'] ?? $user->nomor_telepon;
         $user->jenis_kelamin = $validatedData['jenis_kelamin'] ?? $user->jenis_kelamin;
 
-        // Update password jika disediakan
         if (!empty($validatedData['password'])) {
             $user->password = Hash::make($validatedData['password']);
         }

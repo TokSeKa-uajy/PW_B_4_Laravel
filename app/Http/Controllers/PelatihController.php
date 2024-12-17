@@ -18,18 +18,18 @@ class PelatihController extends Controller
                 return response()->json([
                     'message' => 'Tidak ada pelatih yang ditemukan.',
                     'data' => []
-                ], 404); // Status code 404 karena tidak ada data
+                ], 404);
             }
 
             return response()->json([
                 'message' => 'Data pelatih ditemukan.',
                 'data' => $pelatih
-            ], 200); // Status code 200 untuk permintaan berhasil
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Terjadi kesalahan saat mengambil data pelatih.',
                 'error' => $e->getMessage()
-            ], 500); // Status code 500 jika ada error server
+            ], 500);
         }
     }
 
@@ -63,16 +63,16 @@ class PelatihController extends Controller
             return response()->json([
                 'message' => 'Pelatih berhasil ditambahkan.',
                 'data' => $pelatih
-            ], 201); // Status code 201 untuk data yang berhasil dibuat
+            ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Terjadi kesalahan saat menambahkan pelatih.',
                 'error' => $e->getMessage()
-            ], 500); // Status code 500 jika ada error server
+            ], 500);
         }
     }
 
-    // Menampilkan pelatih berdasarkan ID
+    // Menampilkan pelatih berdasarkan id
     public function show($id)
     {
         try {
@@ -82,18 +82,18 @@ class PelatihController extends Controller
                 return response()->json([
                     'message' => 'Pelatih tidak ditemukan.',
                     'data' => null
-                ], 404); // Status code 404 jika data tidak ditemukan
+                ], 404);
             }
 
             return response()->json([
                 'message' => 'Data pelatih ditemukan.',
                 'data' => $pelatih
-            ], 200); // Status code 200 untuk permintaan berhasil
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Terjadi kesalahan saat mengambil data pelatih.',
                 'error' => $e->getMessage()
-            ], 500); // Status code 500 jika ada error server
+            ], 500);
         }
     }
 
@@ -107,7 +107,7 @@ class PelatihController extends Controller
                 return response()->json([
                     'message' => 'Pelatih tidak ditemukan.',
                     'data' => null
-                ], 404); // Status code 404 jika pelatih tidak ditemukan
+                ], 404);
             }
             $updateData = $request->all();
 
@@ -123,17 +123,13 @@ class PelatihController extends Controller
             }
 
             if($request->hasFile('foto_profil')){
-                // kalau kalian membaca ini, ketahuilah bahwa gambar tidak akan bisa diupdate karena menggunakan method PUT ;)
-                // kalian bisa mengubahnya menjadi POST atau PATCH untuk mengupdate gambar
                 $uploadFolder = 'pelatih';
                 $image = $request->file('foto_profil');
                 $image_uploaded_path = $image->store($uploadFolder, 'public');
                 $uploadedImageResponse = basename($image_uploaded_path);
     
-                // hapus data foto_profil yang lama dari storage
                 Storage::disk('public')->delete('pelatih/'.$pelatih->foto_profil);
     
-                // set foto_profil yang baru
                 $updateData['foto_profil'] = $uploadedImageResponse;
             }
 
@@ -142,12 +138,12 @@ class PelatihController extends Controller
             return response()->json([
                 'message' => 'Data pelatih berhasil diperbarui.',
                 'data' => $pelatih
-            ], 200); // Status code 200 untuk data yang berhasil diperbarui
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Terjadi kesalahan saat memperbarui data pelatih.',
                 'error' => $e->getMessage()
-            ], 500); // Status code 500 jika ada error server
+            ], 500);
         }
     }
 
@@ -161,7 +157,7 @@ class PelatihController extends Controller
                 return response()->json([
                     'message' => 'Pelatih tidak ditemukan.',
                     'data' => null
-                ], 404); // Status code 404 jika pelatih tidak ditemukan
+                ], 404);
             }
 
             $pelatih->delete();
@@ -169,12 +165,12 @@ class PelatihController extends Controller
             return response()->json([
                 'message' => 'Pelatih berhasil dihapus.',
                 'data' => null
-            ], 200); // Status code 200 untuk data yang berhasil dihapus
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Terjadi kesalahan saat menghapus data pelatih.',
                 'error' => $e->getMessage()
-            ], 500); // Status code 500 jika ada error server
+            ], 500);
         }
     }
 }

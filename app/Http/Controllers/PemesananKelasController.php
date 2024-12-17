@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class PemesananKelasController extends Controller
 {
-    // Menemukan pemesanan berdasarkan ID
+    // Menemukan pemesanan berdasarkan id
     public function findById(Request $request, $id)
     {
         $user = $request->user();
@@ -66,7 +66,6 @@ class PemesananKelasController extends Controller
     {
         $user = $request->user();
 
-        // Validasi yang telah diperbarui untuk jenis_pembayaran
         $validated = $request->validate([
             'id_paket_kelas' => 'required|exists:paket_kelas,id_paket_kelas',
             'tanggal_mulai' => 'required|date|after_or_equal:today',
@@ -88,14 +87,13 @@ class PemesananKelasController extends Controller
                 break;
         }
 
-        // Menyimpan pemesanan termasuk jenis_pembayaran
         $pemesanan = Pemesanan_kelas::create([
             'id_user' => $user->id_user,
             'id_paket_kelas' => $validated['id_paket_kelas'],
             'tanggal_pemesanan' => now(),
             'tanggal_mulai' => $validated['tanggal_mulai'],
             'tanggal_selesai' => $tanggalSelesai,
-            'jenis_pembayaran' => $validated['jenis_pembayaran'],  // Menyimpan jenis pembayaran
+            'jenis_pembayaran' => $validated['jenis_pembayaran'],
         ]);
 
         return response()->json([
@@ -104,7 +102,7 @@ class PemesananKelasController extends Controller
         ], 201);
     }
 
-    // Menampilkan detail pemesanan berdasarkan ID
+    // Menampilkan detail pemesanan berdasarkan id
     public function show($id, Request $request)
     {
         $user = $request->user();
@@ -129,9 +127,8 @@ class PemesananKelasController extends Controller
     {
         $user = $request->user();
 
-        // Ambil pemesanan yang termasuk relasi paket_kelas dan kelas
         $pemesanan = Pemesanan_kelas::where('id_user', $user->id_user)
-            ->with(['paket_kelas.kelas.pelatih', 'paket_kelas.kelas.kategori']) // Ambil relasi paket_kelas dan kelas
+            ->with(['paket_kelas.kelas.pelatih', 'paket_kelas.kelas.kategori'])
             ->get();
 
         if ($pemesanan->isEmpty()) {
@@ -141,19 +138,18 @@ class PemesananKelasController extends Controller
             ], 404);
         }
 
-        // Ambil hanya data kelas dari pemesanan + id_pemesanan_kelas
         $kelas = $pemesanan->map(function ($pemesanan) {
             return [
-                'id_pemesanan_kelas' => $pemesanan->id_pemesanan_kelas, // Tambahkan id_pemesanan_kelas
-                'kelas' => $pemesanan->paket_kelas->kelas ?? null, // Data kelas
+                'id_pemesanan_kelas' => $pemesanan->id_pemesanan_kelas,
+                'kelas' => $pemesanan->paket_kelas->kelas ?? null,
             ];
         })->filter(function ($item) {
-            return $item['kelas'] !== null; // Hapus jika kelas null
+            return $item['kelas'] !== null;
         });
 
         return response()->json([
             'message' => 'Pemesanan berhasil ditemukan.',
-            'data' => $kelas->values(), // Reset indeks array
+            'data' => $kelas->values(),
         ], 200);
     }
 
