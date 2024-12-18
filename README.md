@@ -1,9 +1,9 @@
 # Kelas B Kelompok 4
 
 ### Anggota Kelompok:
-Putu Kevin Ardiprana Nugraha (220711827) - Backend & bug hunter
-Archipera Rari Dyaksa (220711891) - Home page
-Tok Se Ka (220711904) - Frontend & integrasi backend
+* Putu Kevin Ardiprana Nugraha (220711827) - Backend & bug hunter
+* Archipera Rari Dyaksa (220711891) - Home page
+* Tok Se Ka (220711904) - Frontend & integrasi backend
 
 ### Username & Password Login:
 * Login User:
